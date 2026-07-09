@@ -5,7 +5,41 @@ const shortid = require('shortid');
 const config = require('config');
 const crypto = require('crypto');
 const Url = require('../models/url');
-const base62 = require('base62')
+const base62 = require('base62');
+
+// Basic Auth Middleware
+const basicAuth = (req, res, next) => {
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+        res.setHeader('WWW-Authenticate', 'Basic realm="Robovitics Admin"');
+        return res.status(401).json({ error: 'Authentication required' });
+    }
+
+    const parts = authHeader.split(' ');
+    if (parts.length !== 2 || parts[0].toLowerCase() !== 'basic') {
+        res.setHeader('WWW-Authenticate', 'Basic realm="Robovitics Admin"');
+        return res.status(401).json({ error: 'Authentication required' });
+    }
+
+    const token = parts[1];
+    try {
+        const credentials = Buffer.from(token, 'base64').toString('ascii').split(':');
+        const username = credentials[0];
+        const password = credentials[1];
+
+        const expectedUsername = config.get('adminUsername') || 'admin';
+        const expectedPassword = config.get('adminPassword') || 'roboviticsadmin';
+
+        if (username === expectedUsername && password === expectedPassword) {
+            return next();
+        }
+    } catch (err) {
+        // Fall through
+    }
+
+    res.setHeader('WWW-Authenticate', 'Basic realm="Robovitics Admin"');
+    return res.status(401).json({ error: 'Invalid credentials' });
+};
 
 //@route post /api/url/shorten
 //@desc create short url
@@ -52,18 +86,3 @@ router.post('/shorten', async (req, res) => {
                 await url.save();
                 res.json(url);
             }
-
-
-        }
-        catch (err) {
-            console.error(err);
-            res.status(500).json('Server Error');
-        }
-    }
-    else {
-        res.status(401).json('INVALID URL ENTERED');
-    }
-})
-
-module.exports = router;
-

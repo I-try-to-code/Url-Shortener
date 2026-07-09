@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robovitics Link Manager - Admin Dashboard</title>
+    <meta name="description" content="Manage custom short URLs for Robovitics club members. Edit and delete active redirects.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Local Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="admin-body">
+    <div class="background-decor">
+        <div class="blob-1"></div>
+        <div class="blob-2"></div>
+    </div>
+
+    <main class="app-container admin-container">
+        <!-- Navigation Back Link -->
+        <div class="nav-bar">
+            <a href="/" class="btn-text-only"><i class="fa-solid fa-arrow-left"></i> Public Shortener</a>
+            <span class="badge badge-admin">Admin Mode</span>
+        </div>
+
+        <!-- Header -->
+        <header class="app-header">
+            <div class="logo">
+                <i class="fa-solid fa-user-shield logo-icon"></i>
+                <span class="logo-text">Robovitics Admin.</span>
+            </div>
+            <p class="tagline">Create custom URLs, modify redirect targets, and manage club links.</p>
+        </header>
+
+        <!-- Cute Robot Mascot (Admin Version) -->
+        <div class="robot-mascot" id="admin-robot">
+            <div class="robot-head-wrapper">
+                <div class="robot-antenna">
+                    <div class="antenna-ball"></div>
+                    <div class="antenna-stick"></div>
+                </div>
+                <div class="robot-head">
+                    <div class="robot-face">
+                        <div class="eye eye-left"></div>
+                        <div class="eye eye-right"></div>
+                        <div class="robot-mouth"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="robot-body-area">
+                <div class="arm arm-left"></div>
+                <div class="robot-body">
+                    <div class="robot-screen">
+                        <i class="fa-solid fa-user-lock screen-icon" id="robot-screen-icon"></i>
+                    </div>
+                </div>
+                <div class="arm arm-right"></div>
+            </div>
+        </div>
+
+        <!-- Section: Create Custom Link -->
+        <section class="card admin-card">
+            <h2><i class="fa-solid fa-plus"></i> Create Custom Link</h2>
+            <form id="custom-shorten-form" class="shorten-form" novalidate>
+                <div class="input-wrapper">
+                    <i class="fa-regular fa-compass input-icon"></i>
+                    <input 
+                        type="url" 
+                        id="long-url-input" 
+                        placeholder="Paste Teams or destination link (http://...)" 
+                        required
+                        autocomplete="off"
+                    >
+                </div>
+                <div class="input-wrapper input-custom-code">
+                    <i class="fa-solid fa-wand-magic-sparkles input-icon"></i>
+                    <span class="domain-prefix" id="domain-prefix">domain/</span>
+                    <input 
+                        type="text" 
+                        id="custom-code-input" 
+                        placeholder="club-board-meeting" 
+                        required
+                        autocomplete="off"
+                        pattern="^[a-zA-Z0-9-_]+$"
+                    >
+                </div>
+                <button type="submit" id="submit-btn" class="btn btn-primary">
+                    <span class="btn-text">Generate / Overwrite Link</span>
+                    <span class="spinner" id="btn-spinner"><i class="fa-solid fa-circle-notch fa-spin"></i></span>
+                </button>
+            </form>
+
+            <!-- Success Indicator -->
+            <div id="result-container" class="result-container hidden">
+                <div class="result-card">
+                    <div class="result-info">
+                        <span class="result-label">Custom link successfully active:</span>
+                        <a href="#" id="shortened-url" class="shortened-url" target="_blank" rel="noopener noreferrer"></a>
+                    </div>
+                    <button id="copy-btn" class="btn btn-secondary copy-btn" aria-label="Copy link">
+                        <i class="fa-regular fa-copy"></i> Copy
+                    </button>
+                </div>
+            </div>
+
+            <!-- Error Notification -->
+            <div id="error-container" class="error-container hidden" role="alert">
+                <div class="error-graphic">
+                    <div class="error-magnifier">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                    <div class="error-ghost">
+                        <i class="fa-solid fa-ghost"></i>
+                    </div>
+                </div>
+                <div class="error-content">
+                    <h3 class="error-title">error 404, link not found</h3>
+                    <p class="error-desc" id="error-desc-msg">Please double-check the URL and the custom code format.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Active Link Inventory -->
+        <section class="card admin-inventory-card">
+            <div class="inventory-header">
+                <h2><i class="fa-solid fa-list-check"></i> Active URL Database</h2>
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                    <input type="text" id="search-input" placeholder="Search codes or links...">
+                </div>
+            </div>
+            
+            <div class="table-container">
+                <table class="inventory-table">
+                    <thead>
+                        <tr>
+                            <th>Short Code</th>
+                            <th>Redirect Target (Long URL)</th>
+                            <th>Date Created</th>
+                            <th class="actions-col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="inventory-list">
+                        <tr>
+                            <td colspan="4" class="table-loading">
+                                <i class="fa-solid fa-circle-notch fa-spin"></i> Loading Robovitics Link Database...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="no-results" class="no-results hidden">
+                <i class="fa-regular fa-folder-open"></i>
+                <p>No matching links found in the database.</p>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>Robovitics URL Management Portal. Restricted to authorized club members.</p>
+        </footer>
+    </main>
+
+    <!-- Modal for Editing Destination Link -->
+    <div id="edit-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 id="modal-title"><i class="fa-solid fa-pen-to-square"></i> Edit Redirect Target</h3>
+                <button id="close-modal-btn" class="close-modal-btn" aria-label="Close modal"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form id="edit-link-form" class="shorten-form">
+                <input type="hidden" id="edit-code-hidden">
+                <div class="edit-code-display">
+                    <span class="label">Editing short code:</span>
+                    <span class="code-value" id="edit-code-label">code</span>
+                </div>
+                <div class="input-wrapper">
+                    <i class="fa-regular fa-compass input-icon"></i>
+                    <input 
+                        type="url" 
+                        id="edit-long-url-input" 
+                        placeholder="Paste new Teams or destination link" 
+                        required
+                        autocomplete="off"
+                    >
+                </div>
+                <div class="modal-actions">
+                    <button type="button" id="cancel-edit-btn" class="btn btn-secondary">Cancel</button>
+                    <button type="submit" id="save-edit-btn" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin App Logic -->
+    <script src="admin-app.js"></script>
+</body>
+</html>
