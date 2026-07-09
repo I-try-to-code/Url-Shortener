@@ -4,7 +4,9 @@ const db = config.get('mongoURL');
 
 const connectDB = async () => {
     try {
-        await mongoose.connect(db);
+        await mongoose.connect(db, {
+            tlsAllowInvalidCertificates: true
+        });
 
         console.log("Mongoose DB successfully connected");
     } catch (err) {
