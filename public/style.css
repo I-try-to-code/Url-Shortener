@@ -171,7 +171,8 @@ body {
     transition: var(--transition-quick);
 }
 
-#long-url-input {
+#long-url-input,
+#edit-long-url-input {
     width: 100%;
     padding: 1.1rem 3rem 1.1rem 3rem;
     border: 1px solid var(--border-color);
@@ -184,13 +185,15 @@ body {
     outline: none;
 }
 
-#long-url-input:focus {
+#long-url-input:focus,
+#edit-long-url-input:focus {
     border-color: var(--accent-color);
     background-color: var(--bg-card);
     box-shadow: 0 0 0 4px rgba(140, 106, 79, 0.1);
 }
 
-#long-url-input:focus+.input-icon {
+#long-url-input:focus+.input-icon,
+#edit-long-url-input:focus+.input-icon {
     color: var(--accent-color);
 }
 

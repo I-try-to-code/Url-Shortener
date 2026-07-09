@@ -36,8 +36,19 @@ document.addEventListener('DOMContentLoaded', () => {
     init();
 
     function init() {
-        // Set domain prefix dynamically based on current host
-        domainPrefix.textContent = window.location.origin + '/';
+        // Fetch baseURL dynamically from the server config
+        fetch('/api/url/admin/base-url')
+            .then(res => res.json())
+            .then(data => {
+                if (data && data.baseURL) {
+                    domainPrefix.textContent = data.baseURL + '/';
+                } else {
+                    domainPrefix.textContent = window.location.origin + '/';
+                }
+            })
+            .catch(() => {
+                domainPrefix.textContent = window.location.origin + '/';
+            });
 
         loadLinksDatabase();
         setupEventListeners();
