@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shorten - Clean & Simple URL Shortener</title>
+    <meta name="description" content="A sleek, minimal, and fast URL shortener service. Shorten long links instantly with no hassle.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Local Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background-decor">
+        <div class="blob-1"></div>
+        <div class="blob-2"></div>
+    </div>
+
+    <main class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="logo">
+                <i class="fa-solid fa-link logo-icon"></i>
+                <span class="logo-text">Shorten.</span>
+            </div>
+            <p class="tagline">Convert long, messy links into clean, memorable URLs.</p>
+        </header>
+
+        <!-- Main Card -->
+        <section class="card shortener-card">
+            <form id="shorten-form" class="shorten-form" novalidate>
+                <div class="input-wrapper">
+                    <i class="fa-regular fa-compass input-icon"></i>
+                    <input 
+                        type="url" 
+                        id="long-url-input" 
+                        placeholder="Paste your long link here..." 
+                        required
+                        autocomplete="off"
+                        spellcheck="false"
+                    >
+                    <button type="button" id="clear-input-btn" class="clear-btn" aria-label="Clear input">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                <button type="submit" id="submit-btn" class="btn btn-primary">
+                    <span class="btn-text">Shorten URL</span>
+                    <span class="spinner" id="btn-spinner"><i class="fa-solid fa-circle-notch fa-spin"></i></span>
+                </button>
+            </form>
+
+            <!-- Error State Container (404 style for invalid links) -->
+            <div id="error-container" class="error-container hidden" role="alert">
+                <div class="error-graphic">
+                    <div class="error-magnifier">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                    <div class="error-ghost">
+                        <i class="fa-solid fa-ghost"></i>
+                    </div>
+                </div>
+                <div class="error-content">
+                    <h3 class="error-title">error 404, link not found</h3>
+                    <p class="error-desc">Please verify the URL is valid and starts with http:// or https://</p>
+                </div>
+            </div>
+
+            <!-- Success/Result State Container -->
+            <div id="result-container" class="result-container hidden">
+                <div class="result-card">
+                    <div class="result-info">
+                        <span class="result-label">Your shortened link is ready:</span>
+                        <a href="#" id="shortened-url" class="shortened-url" target="_blank" rel="noopener noreferrer"></a>
+                    </div>
+                    <button id="copy-btn" class="btn btn-secondary copy-btn" aria-label="Copy short URL">
+                        <i class="fa-regular fa-copy"></i>
+                        <span>Copy</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- History Section -->
+        <section id="history-section" class="history-section hidden">
+            <div class="history-header">
+                <h2>Recently Shortened Links</h2>
+                <button id="clear-history-btn" class="btn-text-only" aria-label="Clear all history">
+                    <i class="fa-regular fa-trash-can"></i> Clear All
+                </button>
+            </div>
+            <div id="history-list" class="history-list">
+                <!-- Dynamically populated -->
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>Free to use. No sign-up required. Powered by MATE API.</p>
+        </footer>
+    </main>
+
+    <!-- App Scripts -->
+    <script src="app.js"></script>
+</body>
+</html>

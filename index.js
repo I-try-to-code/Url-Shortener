@@ -10,5 +10,6 @@ app.listen(PORT, () => console.log("Running MATE"))
 
 
 //defining routes
+app.use(express.static('public'));
 app.use('/', require('./routes/index.js'));
 app.use('/api/url', require('./routes/url.js'));
