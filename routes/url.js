@@ -27,8 +27,20 @@ const basicAuth = (req, res, next) => {
         const username = credentials[0];
         const password = credentials[1];
 
-        const expectedUsername = config.get('adminUsername') || 'admin';
-        const expectedPassword = config.get('adminPassword') || 'roboviticsadmin';
+        let expectedUsername = 'admin';
+        let expectedPassword = null;
+
+        if (config.has('adminUsername')) {
+            expectedUsername = config.get('adminUsername');
+        }
+        if (config.has('adminPassword')) {
+            expectedPassword = config.get('adminPassword');
+        }
+
+        if (!expectedPassword) {
+            res.setHeader('WWW-Authenticate', 'Basic realm="Robovitics Admin"');
+            return res.status(401).json({ error: 'Admin access not configured' });
+        }
 
         if (username === expectedUsername && password === expectedPassword) {
             return next();
