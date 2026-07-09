@@ -130,7 +130,7 @@ router.post('/admin/custom-shorten', basicAuth, async (req, res) => {
     try {
         let url = await Url.findOne({ urlCode: cleanCode });
         const shortUrl = baseURL + '/' + cleanCode;
-        
+
         if (url) {
             // Overwrite existing custom URL
             url.longUrl = longUrl;

@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const resultContainer = document.getElementById('result-container');
     const shortenedUrl = document.getElementById('shortened-url');
     const copyBtn = document.getElementById('copy-btn');
-    
+
     const historySection = document.getElementById('history-section');
     const historyList = document.getElementById('history-list');
     const clearHistoryBtn = document.getElementById('clear-history-btn');
@@ -75,15 +75,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // Robot Mascot State Manager
     function setRobotState(state) {
         if (!robotMascot) return;
-        
+
         // Reset classes
         robotMascot.classList.remove('state-loading', 'state-success', 'state-error');
-        
+
         // Reset screen icon
         if (robotScreenIcon) {
             robotScreenIcon.className = 'fa-solid fa-heart screen-icon';
         }
-        
+
         if (state === 'loading') {
             robotMascot.classList.add('state-loading');
             if (robotScreenIcon) {
@@ -157,7 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             const data = await response.json();
-            
+
             if (data && data.shortUrl) {
                 showResult(data.shortUrl);
                 saveToHistory(data);
@@ -207,7 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
         btnElement.innerHTML = `<i class="fa-solid fa-check" style="color: var(--success-color)"></i> <span style="color: var(--success-color)">Copied!</span>`;
         btnElement.style.borderColor = 'var(--success-border)';
         btnElement.style.backgroundColor = 'var(--success-bg)';
-        
+
         setTimeout(() => {
             btnElement.innerHTML = originalContent;
             btnElement.style.borderColor = '';
@@ -224,13 +224,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function saveToHistory(newUrlObj) {
         let history = getHistory();
-        
+
         // Remove existing item if same longUrl to prevent duplicates and put at top
         history = history.filter(item => item.longUrl !== newUrlObj.longUrl);
-        
+
         // Prepend new item
         history.unshift(newUrlObj);
-        
+
         // Limit history to 8 items to stay sleek
         if (history.length > 8) {
             history.pop();
@@ -269,7 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
         history.forEach(item => {
             const itemEl = document.createElement('div');
             itemEl.className = 'history-item';
-            
+
             // Shorten display name for long urls
             let displayLongUrl = item.longUrl;
             if (displayLongUrl.length > 55) {

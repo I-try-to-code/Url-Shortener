@@ -6,27 +6,30 @@
     --border-color: #E6E0D2;
     --text-primary: #2B2927;
     --text-muted: #7A756F;
-    --accent-color: #8C6A4F; /* Sophisticated warm tan */
+    --accent-color: #8C6A4F;
+    /* Sophisticated warm tan */
     --accent-hover: #73533C;
     --accent-light: #F8F5EE;
-    --error-color: #C05C5C; /* Soft terracotta red */
+    --error-color: #C05C5C;
+    /* Soft terracotta red */
     --error-bg: #FCF7F7;
     --error-border: #E8D0D0;
-    --success-color: #557A46; /* Sage green */
+    --success-color: #557A46;
+    /* Sage green */
     --success-bg: #F4F7F3;
     --success-border: #D8E2D5;
-    
+
     --font-heading: 'Outfit', sans-serif;
     --font-body: 'Inter', sans-serif;
-    
+
     --shadow-sm: 0 2px 8px rgba(43, 41, 39, 0.03);
     --shadow-md: 0 12px 32px rgba(43, 41, 39, 0.05);
     --shadow-lg: 0 20px 48px rgba(43, 41, 39, 0.08);
-    
+
     --radius-sm: 8px;
     --radius-md: 14px;
     --radius-lg: 20px;
-    
+
     --transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     --transition-quick: all 0.15s ease;
 }
@@ -187,7 +190,7 @@ body {
     box-shadow: 0 0 0 4px rgba(140, 106, 79, 0.1);
 }
 
-#long-url-input:focus + .input-icon {
+#long-url-input:focus+.input-icon {
     color: var(--accent-color);
 }
 
@@ -397,7 +400,8 @@ body {
     color: var(--error-color);
     font-size: 1.15rem;
     font-weight: 600;
-    text-transform: lowercase; /* Matches user request 'error 404, link not found' */
+    text-transform: lowercase;
+    /* Matches user request 'error 404, link not found' */
 }
 
 .error-desc {
@@ -543,8 +547,13 @@ body {
 
 /* Keyframe Animations */
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 @keyframes fadeInUp {
@@ -552,6 +561,7 @@ body {
         opacity: 0;
         transform: translateY(15px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -563,6 +573,7 @@ body {
         opacity: 0;
         transform: translateY(10px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -571,9 +582,12 @@ body {
 
 /* Error Floating Ghost animation */
 @keyframes ghostFloat {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: translateY(0);
     }
+
     50% {
         transform: translateY(-6px);
     }
@@ -581,12 +595,16 @@ body {
 
 /* Magnifier searching animation */
 @keyframes magnifierSearch {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: rotate(0deg) translate(0, 0);
     }
+
     33% {
         transform: rotate(-15deg) translate(-2px, -2px);
     }
+
     66% {
         transform: rotate(15deg) translate(2px, 0);
     }
@@ -834,9 +852,11 @@ body {
     top: 3px;
     left: 0;
 }
+
 .robot-mascot.state-error .eye::before {
     transform: rotate(45deg);
 }
+
 .robot-mascot.state-error .eye::after {
     transform: rotate(-45deg);
 }
@@ -860,9 +880,12 @@ body {
 
 /* Normal Bobbing */
 @keyframes robotBob {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: translateY(0);
     }
+
     50% {
         transform: translateY(-3px);
     }
@@ -870,9 +893,12 @@ body {
 
 /* Fast Bobbing (Loading) */
 @keyframes robotBobFast {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: translateY(0);
     }
+
     50% {
         transform: translateY(-5px);
     }
@@ -880,9 +906,13 @@ body {
 
 /* Blinking */
 @keyframes robotBlink {
-    0%, 95%, 100% {
+
+    0%,
+    95%,
+    100% {
         transform: scaleY(1);
     }
+
     97.5% {
         transform: scaleY(0.1);
     }
@@ -890,9 +920,12 @@ body {
 
 /* Wave arms left */
 @keyframes robotArmWaveLeft {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: rotate(0deg);
     }
+
     50% {
         transform: rotate(10deg);
     }
@@ -900,9 +933,12 @@ body {
 
 /* Wave arms right */
 @keyframes robotArmWaveRight {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: rotate(0deg);
     }
+
     50% {
         transform: rotate(-10deg);
     }
@@ -913,6 +949,7 @@ body {
     0% {
         transform: rotate(20deg);
     }
+
     100% {
         transform: rotate(80deg);
     }
@@ -923,6 +960,7 @@ body {
     from {
         opacity: 0.6;
     }
+
     to {
         opacity: 1;
     }
@@ -933,6 +971,7 @@ body {
     from {
         transform: scale(0.9);
     }
+
     to {
         transform: scale(1.1);
     }
@@ -940,9 +979,12 @@ body {
 
 /* Success Jump */
 @keyframes robotJump {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: translateY(0);
     }
+
     50% {
         transform: translateY(-15px) scale(1.05);
     }
@@ -950,21 +992,43 @@ body {
 
 /* Error Shake */
 @keyframes robotShake {
-    0%, 100% { transform: translateX(0); }
-    20%, 60% { transform: translateX(-4px); }
-    40%, 80% { transform: translateX(4px); }
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    20%,
+    60% {
+        transform: translateX(-4px);
+    }
+
+    40%,
+    80% {
+        transform: translateX(4px);
+    }
 }
 
 /* Screen gear spin */
 @keyframes spinGear {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 /* Shake screen icon */
 @keyframes shakeIcon {
-    from { transform: rotate(-10deg); }
-    to { transform: rotate(10deg); }
+    from {
+        transform: rotate(-10deg);
+    }
+
+    to {
+        transform: rotate(10deg);
+    }
 }
 
 /* --- Admin Dashboard Specific Styles --- */
@@ -1327,5 +1391,3 @@ body {
 .modal-actions .btn {
     width: 50%;
 }
-
-

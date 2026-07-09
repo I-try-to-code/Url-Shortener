@@ -1,0 +1,6 @@
+{
+  "mongoURL": "MONGO_URL",
+  "baseURL": "BASE_URL",
+  "adminUsername": "ADMIN_USERNAME",
+  "adminPassword": "ADMIN_PASSWORD"
+}
