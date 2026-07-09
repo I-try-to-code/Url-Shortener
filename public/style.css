@@ -591,3 +591,379 @@ body {
         transform: rotate(15deg) translate(2px, 0);
     }
 }
+
+/* --- Cute Interactive Robot Mascot Styles --- */
+.robot-mascot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    position: relative;
+    user-select: none;
+}
+
+.robot-head-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+}
+
+.robot-antenna {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: -2px;
+}
+
+.antenna-ball {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--accent-color);
+    border: 1px solid var(--border-color);
+    transition: var(--transition-smooth);
+}
+
+.antenna-stick {
+    width: 2px;
+    height: 10px;
+    background-color: var(--border-color);
+}
+
+.robot-head {
+    width: 64px;
+    height: 44px;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 14px 14px 8px 8px;
+    padding: 6px 8px;
+    position: relative;
+    box-shadow: var(--shadow-sm);
+    animation: robotBob 4s ease-in-out infinite;
+}
+
+.robot-face {
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0 6px;
+    overflow: hidden;
+}
+
+.eye {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--text-primary);
+    position: relative;
+    transition: var(--transition-smooth);
+    animation: robotBlink 4s infinite;
+}
+
+.robot-mouth {
+    position: absolute;
+    bottom: 5px;
+    left: calc(50% - 6px);
+    width: 12px;
+    height: 4px;
+    border-radius: 0 0 12px 12px;
+    border-bottom: 2px solid var(--text-primary);
+    transition: var(--transition-smooth);
+}
+
+/* Body Area */
+.robot-body-area {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    margin-top: -3px;
+    z-index: 1;
+}
+
+.robot-body {
+    width: 54px;
+    height: 40px;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 6px 6px 12px 12px;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+}
+
+.robot-screen {
+    width: 32px;
+    height: 22px;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.screen-icon {
+    font-size: 0.7rem;
+    color: var(--accent-color);
+    transition: var(--transition-smooth);
+    animation: heartbeat 2s infinite alternate;
+}
+
+.arm {
+    width: 6px;
+    height: 18px;
+    background-color: var(--accent-color);
+    border-radius: 4px;
+    margin-top: 4px;
+}
+
+.arm-left {
+    margin-right: -2px;
+    transform-origin: top right;
+    animation: robotArmWaveLeft 6s ease-in-out infinite;
+}
+
+.arm-right {
+    margin-left: -2px;
+    transform-origin: top left;
+    animation: robotArmWaveRight 6s ease-in-out infinite;
+}
+
+/* --- Mascot Interactive State Changes --- */
+
+/* Hover state triggers waving arms */
+.robot-mascot:hover .arm-left {
+    animation: robotWaveActive 0.5s ease-in-out infinite alternate;
+}
+
+/* 1. Loading State */
+.robot-mascot.state-loading .robot-head {
+    animation: robotBobFast 0.6s ease-in-out infinite;
+}
+
+.robot-mascot.state-loading .antenna-ball {
+    background-color: #E3A857;
+    box-shadow: 0 0 8px #E3A857;
+    animation: antennaFlash 0.3s ease-in-out infinite alternate;
+}
+
+.robot-mascot.state-loading .eye {
+    height: 3px;
+    border-radius: 0;
+    animation: none;
+}
+
+.robot-mascot.state-loading .screen-icon {
+    animation: spinGear 1s linear infinite;
+    color: var(--text-muted);
+}
+
+/* 2. Success State */
+.robot-mascot.state-success {
+    animation: robotJump 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1;
+}
+
+.robot-mascot.state-success .antenna-ball {
+    background-color: var(--success-color);
+    box-shadow: 0 0 6px var(--success-color);
+}
+
+.robot-mascot.state-success .eye {
+    width: 10px;
+    height: 5px;
+    border-radius: 10px 10px 0 0;
+    background: transparent;
+    border: 2px solid var(--success-color);
+    border-bottom: none;
+    animation: none;
+}
+
+.robot-mascot.state-success .robot-mouth {
+    border-radius: 50%;
+    border: 2px solid var(--success-color);
+    background-color: transparent;
+    width: 8px;
+    height: 8px;
+    bottom: 3px;
+    left: calc(50% - 4px);
+}
+
+.robot-mascot.state-success .screen-icon {
+    color: var(--success-color);
+    animation: none;
+}
+
+/* 3. Error State */
+.robot-mascot.state-error {
+    animation: robotShake 0.4s ease-in-out 1;
+}
+
+.robot-mascot.state-error .antenna-ball {
+    background-color: var(--error-color);
+    box-shadow: 0 0 6px var(--error-color);
+}
+
+.robot-mascot.state-error .eye {
+    width: 8px;
+    height: 8px;
+    background: transparent;
+    border: none;
+    position: relative;
+    animation: none;
+}
+
+/* Drawing X's for eyes in error state */
+.robot-mascot.state-error .eye::before,
+.robot-mascot.state-error .eye::after {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 2px;
+    background-color: var(--error-color);
+    top: 3px;
+    left: 0;
+}
+.robot-mascot.state-error .eye::before {
+    transform: rotate(45deg);
+}
+.robot-mascot.state-error .eye::after {
+    transform: rotate(-45deg);
+}
+
+.robot-mascot.state-error .robot-mouth {
+    width: 12px;
+    height: 4px;
+    border-radius: 12px 12px 0 0;
+    border-top: 2px solid var(--error-color);
+    border-bottom: none;
+    bottom: 7px;
+}
+
+.robot-mascot.state-error .screen-icon {
+    color: var(--error-color);
+    animation: shakeIcon 0.5s infinite alternate;
+}
+
+
+/* --- Robot Keyframe Animations --- */
+
+/* Normal Bobbing */
+@keyframes robotBob {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-3px);
+    }
+}
+
+/* Fast Bobbing (Loading) */
+@keyframes robotBobFast {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+/* Blinking */
+@keyframes robotBlink {
+    0%, 95%, 100% {
+        transform: scaleY(1);
+    }
+    97.5% {
+        transform: scaleY(0.1);
+    }
+}
+
+/* Wave arms left */
+@keyframes robotArmWaveLeft {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+    50% {
+        transform: rotate(10deg);
+    }
+}
+
+/* Wave arms right */
+@keyframes robotArmWaveRight {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+    50% {
+        transform: rotate(-10deg);
+    }
+}
+
+/* Hover/Active waving */
+@keyframes robotWaveActive {
+    0% {
+        transform: rotate(20deg);
+    }
+    100% {
+        transform: rotate(80deg);
+    }
+}
+
+/* Antenna flashing */
+@keyframes antennaFlash {
+    from {
+        opacity: 0.6;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Screen heart beating */
+@keyframes heartbeat {
+    from {
+        transform: scale(0.9);
+    }
+    to {
+        transform: scale(1.1);
+    }
+}
+
+/* Success Jump */
+@keyframes robotJump {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-15px) scale(1.05);
+    }
+}
+
+/* Error Shake */
+@keyframes robotShake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-4px); }
+    40%, 80% { transform: translateX(4px); }
+}
+
+/* Screen gear spin */
+@keyframes spinGear {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Shake screen icon */
+@keyframes shakeIcon {
+    from { transform: rotate(-10deg); }
+    to { transform: rotate(10deg); }
+}
+

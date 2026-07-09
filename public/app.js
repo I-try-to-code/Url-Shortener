@@ -13,6 +13,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const historyList = document.getElementById('history-list');
     const clearHistoryBtn = document.getElementById('clear-history-btn');
 
+    // Robot Mascot Elements
+    const robotMascot = document.getElementById('robot-mascot');
+    const robotScreenIcon = document.getElementById('robot-screen-icon');
+
     // Local Storage History Key
     const HISTORY_KEY = 'shorten_history';
 
@@ -35,8 +39,9 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 clearInputBtn.style.display = 'none';
             }
-            // Clear errors on typing
+            // Clear errors on typing and reset robot
             hideError();
+            setRobotState('idle');
         });
 
         // Clear input button
@@ -45,6 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
             clearInputBtn.style.display = 'none';
             longUrlInput.focus();
             hideError();
+            setRobotState('idle');
         });
 
         // Copy button behavior
@@ -66,11 +72,42 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Robot Mascot State Manager
+    function setRobotState(state) {
+        if (!robotMascot) return;
+        
+        // Reset classes
+        robotMascot.classList.remove('state-loading', 'state-success', 'state-error');
+        
+        // Reset screen icon
+        if (robotScreenIcon) {
+            robotScreenIcon.className = 'fa-solid fa-heart screen-icon';
+        }
+        
+        if (state === 'loading') {
+            robotMascot.classList.add('state-loading');
+            if (robotScreenIcon) {
+                robotScreenIcon.className = 'fa-solid fa-cog screen-icon';
+            }
+        } else if (state === 'success') {
+            robotMascot.classList.add('state-success');
+            if (robotScreenIcon) {
+                robotScreenIcon.className = 'fa-solid fa-check screen-icon';
+            }
+        } else if (state === 'error') {
+            robotMascot.classList.add('state-error');
+            if (robotScreenIcon) {
+                robotScreenIcon.className = 'fa-solid fa-circle-exclamation screen-icon';
+            }
+        }
+    }
+
     // Hide/Show Errors
     function showError() {
         resultContainer.classList.add('hidden');
         errorContainer.classList.remove('hidden');
         errorContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        setRobotState('error');
     }
 
     function hideError() {
@@ -84,6 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
         shortenedUrl.href = url;
         resultContainer.classList.remove('hidden');
         resultContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        setRobotState('success');
     }
 
     // Submit handler
@@ -102,6 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
         submitBtn.classList.add('loading');
         submitBtn.disabled = true;
         hideError();
+        setRobotState('loading');
 
         try {
             const response = await fetch('/api/url/shorten', {
