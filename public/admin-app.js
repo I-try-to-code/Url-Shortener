@@ -179,6 +179,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td class="td-date">${dateString}</td>
                 <td class="actions-col">
                     <div class="history-actions">
+                        <button class="btn-icon btn-copy" title="Copy Short URL">
+                            <i class="fa-regular fa-copy"></i>
+                        </button>
                         <button class="btn-icon btn-edit" title="Edit Redirect Target">
                             <i class="fa-solid fa-pencil"></i>
                         </button>
@@ -190,6 +193,10 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
 
             // Wire up actions
+            const itemCopyBtn = tr.querySelector('.btn-copy');
+            itemCopyBtn.addEventListener('click', () => {
+                copyTextToClipboard(item.shortUrl, itemCopyBtn);
+            });
             tr.querySelector('.btn-edit').addEventListener('click', () => openEditModal(item));
             tr.querySelector('.btn-delete').addEventListener('click', () => handleDeleteLink(item.urlCode));
 
